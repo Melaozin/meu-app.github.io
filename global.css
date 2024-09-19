@@ -5,21 +5,23 @@
 }
 
 body {
-  height: 100vh;
+  height: auto;
   display: flex;
   justify-content: center;
-  background: #393646;
+  background: #f49300;
 }
 
 nav {
-  background-color: #15161c;
-  height: 90px;
+  background-color: #0b0916;
+  height: 77px;
   width: 100%;
   display: flex;
   position: fixed;
   bottom: 0;
   justify-content: space-around;
   align-items: center;
+  border-radius: 10px 10px 0 0;
+  z-index: 100;
 }
 
 nav a {
@@ -27,12 +29,12 @@ nav a {
   align-content: center;
   padding: 0;
   border-radius: 7px;
-  color: #fdfffc;
+  color: #f5f5f5;
   text-decoration: none;
 }
 
 .partidas {
-  background-color: #01101d;
+  background-color: #4e0c92;
   height: 90px;
   width: 90px;
   border-radius: 50%;
@@ -42,19 +44,19 @@ nav a {
 }
 
 .bnt-menu_1 {
-  background-color: #01101d;
+  background-color: #4e0c92;
   height: 50px;
-  width: 107px;
+  width: 100px;
   font-size: 22px;
-  position: fixed;
+  position: absolute;
   left: 5%;
 }
 
 .bnt-menu_2 {
-  background-color: #01101d;
+  background-color: #4e0c92;
   height: 50px;
-  width: 107px;
+  width: 100px;
   font-size: 22px;
-  position: fixed;
+  position: absolute;
   right: 5%;
 }
