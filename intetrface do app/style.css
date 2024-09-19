@@ -1,0 +1,86 @@
+main {
+  width: 100%;
+  padding: 10px;
+}
+
+.game {
+  border: solid 1px black;
+  width: auto;
+  height: inherit;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.header {
+  width: 100%;
+  height: auto;
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin-bottom: 7px;
+  padding: 2px;
+  border-bottom: solid 1px black;
+}
+
+.header img {
+  margin: 0 5px 0 0;
+}
+
+.header p {
+  width: auto;
+  margin: 0 0 0 5px;
+  font-size: 20px;
+}
+
+.header button {
+  position: absolute;
+  width: 50px;
+  height: 20px;
+  right: 5px;
+}
+
+.conteudo {
+  display: flex;
+  flex-direction: row;
+}
+
+.score {
+  width: 25%;
+  height: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.score span {
+  display: flex;
+  flex-direction: row;
+}
+
+.teams {
+  height: auto;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 15px;
+}
+
+.teams h3 {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  width: 110px;
+  height: 45px;
+}
+
+.teams span {
+  width: 50px;
+  height: 30px;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+}
