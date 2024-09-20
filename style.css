@@ -1,4 +1,4 @@
-main {
+#main {
   width: 100%;
   padding: 10px;
 }
@@ -39,6 +39,7 @@ main {
   background-color: #bf2ef0;
   background-clip: text;
   color: transparent;
+  
 }
 
 .header p {
@@ -63,13 +64,12 @@ main {
 .score {
   width: 25%;
   height: auto;
-
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.score span {
+.score div {
   display: flex;
   flex-direction: row;
 }
@@ -97,4 +97,17 @@ main {
   font-size: 25px;
   display: flex;
   justify-content: center;
+}
+
+.disable {
+  display: none;
+}
+
+.date {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  word-wrap: break-word;
+  white-space: normal;
 }

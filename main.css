@@ -1,0 +1,17 @@
+#main {
+  width: 100%;
+  padding: 10px;
+}
+
+.game {
+  display: flex;
+  padding: 3px 10px;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  background: rgba(122, 28, 172, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.5px);
+  -webkit-backdrop-filter: blur(6.5px);
+  border: 1px solid #bf2ef0;
+}
