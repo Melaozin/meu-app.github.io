@@ -17,35 +17,36 @@
     <div id="main">
       <!--<div class="game">
         <div class="header">
-          <img src="./img/Escudo-La liga.png" alt="" width="25px" />
-          <p>Premier League</p>
-          <button>Add</button>
+          <img src="${infos.logoLiga}" alt="" width="25px" />
+          <p>${infos.nomeLiga}</p>
+          <button class="add">Add</button>
         </div>
-
         <div class="conteudo">
           <div class="teams team-home">
-            <img src="./img/Escudo-Everton.png" alt="" width="70px" />
-            <h3>Everton</h3>
-            <span class="team-home_odd">2.00</span>
+            <img src="${infos.escudoHome}" width="70px" />
+            <h3>${infos.nomeHome}</h3>
+            <span class="team-home_odd">${oddHomeInt.toFixed(2)}</span>
           </div>
 
           <div class="score">
-            <div class="placar disable">
-              <h1>0</h1>
+            <div class="disable>
+              <h1></h1>
               <h1>-</h1>
-              <h1>2</h1>
+              <h1></h1>
             </div>
-            <div class="date">2024-09-21</div>
           </div>
-          <div class="teams team-away">
-            <img src="./img/Escudo-Manchester United.png" alt="" width="70px" />
-            <h3>Manchester United</h3>
-            <span class="team-away_odd">2.00</span>
-          </div>
+          <div class="date">${new Date(infos.Data).toLocaleString()}</div>
+        </div>
+        
+        <div class="teams team-away">
+          <img src="${infos.escudoAway}" width="70px" />
+          <h3>${infos.nomeAway}</h3>
+          <span class="team-away_odd">${oddAwayInt.toFixed(2)}</span>
         </div>
       </div>
       -->
     </div>
-    <script src="scrpit.js"></script>
+    <script src="testes.js"></script>
+    <!-- <script src="testes.js"></script> -->
   </body>
 </html>

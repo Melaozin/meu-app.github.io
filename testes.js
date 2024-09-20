@@ -1,14 +1,8 @@
 const fetchData = async (camp) => {
-  try {
-    const endPoint = `https://site.api.espn.com/apis/site/v2/sports/soccer/${camp}/scoreboard`;
-    const res = await fetch(endPoint);
-    if (!res.ok) throw new Error(`Failed to fetch data for ${camp}`);
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return { events: [] }; // Retorna um objeto vazio se houver um erro
-  }
+  const endPoint = `https://site.api.espn.com/apis/site/v2/sports/soccer/${camp}/scoreboard`;
+  const res = await fetch(endPoint);
+  const data = await res.json();
+  return data;
 };
 
 function isToday(dateString) {
@@ -23,13 +17,19 @@ function isToday(dateString) {
 }
 
 function mapJogos(data) {
+  if (!data.events || data.events.length === 0) return [];
+
   // Filtrando e mapeando cada evento em um objeto de jogo, apenas se a data for hoje
-  const jogos = data.events
+  return data.events
     .filter((event) => isToday(event.date))
     .map((event) => ({
       Data: event.date,
-      OddHome: event.competitions[0].odds[0].homeTeamOdds.summary,
-      OddAway: event.competitions[0].odds[0].awayTeamOdds.summary,
+      OddHome: event.competitions[0].odds[0].homeTeamOdds
+        ? event.competitions[0].odds[0].homeTeamOdds.summary
+        : "N/A",
+      OddAway: event.competitions[0].odds[0].awayTeamOdds
+        ? event.competitions[0].odds[0].awayTeamOdds.summary
+        : "N/A",
       nomeHome: event.competitions[0].competitors[0].team.shortDisplayName,
       nomeAway: event.competitions[0].competitors[1].team.shortDisplayName,
       escudoHome: event.competitions[0].competitors[0].team.logo,
@@ -37,7 +37,6 @@ function mapJogos(data) {
       logoLiga: data.leagues[0].logos[0].href,
       nomeLiga: data.leagues[0].name,
     }));
-  return jogos;
 }
 
 const features = async () => {
@@ -84,12 +83,13 @@ const displayInfos = async () => {
   const main = document.getElementById("main");
   const jogos = await features(); // Obtem todos os jogos filtrados pela data de hoje
 
+  console.log(jogos);
   jogos.forEach((infos) => {
     // Convertendo odds de fração para número
     const [numeratorHome, denominatorHome] =
-      infos.OddHome.split("/").map(Number);
+      infos.OddHome !== "N/A" ? infos.OddHome.split("/").map(Number) : "1";
     const [numeratorAway, denominatorAway] =
-      infos.OddAway.split("/").map(Number);
+      infos.OddAway !== "N/A" ? infos.OddAway.split("/").map(Number) : "1";
 
     const oddHomeInt = numeratorHome / denominatorHome + 1;
     const oddAwayInt = numeratorAway / denominatorAway + 1;
@@ -109,7 +109,7 @@ const displayInfos = async () => {
           </div>
 
           <div class="score">
-            <div class="disable>
+            <div class="disable">
               <h1></h1>
               <h1>-</h1>
               <h1></h1>
