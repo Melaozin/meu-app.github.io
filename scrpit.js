@@ -1,4 +1,3 @@
-const apiKey = "e80a75c9bc8c705218ece23052c94474";
 const endPoint =
   "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard";
 const nflGames = document.getElementById("scoreboard");
@@ -20,7 +19,6 @@ const displayOdds = async () => {
     nomeLiga: data.leagues[0].name,
   }));
 
-  console.log("Jogos: ", jogos);
   return jogos;
 };
 
@@ -44,7 +42,7 @@ const displayInfos = async () => {
         <div class="header">
           <img src="${infos.logoLiga}" alt="" width="25px" />
           <p>${infos.nomeLiga}</p>
-          <button>Add</button>
+          <button class="add">Add</button>
         </div>
 
         <div class="conteudo">
@@ -78,6 +76,30 @@ const displayInfos = async () => {
 
     // Adicionando o conteúdo ao elemento principal
     main.appendChild(container.firstElementChild);
+  });
+  // Adicionando evento de clique para todos os botões "Add"
+  document.querySelectorAll(".add").forEach((button) => {
+    button.addEventListener("click", (e) => {
+      // Selecionando o elemento pai mais próximo com a classe "game"
+      const gameElement = e.target.closest(".game");
+
+      // Capturando as informações do quadro
+      const gameInfo = {
+        nomeLiga: gameElement.querySelector(".header p").textContent,
+        nomeHome: gameElement.querySelector(".team-home h3").textContent,
+        nomeAway: gameElement.querySelector(".team-away h3").textContent,
+        oddHome: parseFloat(
+          gameElement.querySelector(".team-home_odd").textContent
+        ),
+        oddAway: parseFloat(
+          gameElement.querySelector(".team-away_odd").textContent
+        ),
+        dataJogo: gameElement.querySelector(".date").textContent,
+      };
+
+      console.log("Informações do jogo adicionadas:", gameInfo);
+      // Aqui você pode fazer o que precisar com o objeto gameInfo
+    });
   });
 };
 
