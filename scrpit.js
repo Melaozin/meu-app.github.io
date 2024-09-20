@@ -54,12 +54,12 @@ const displayInfos = async () => {
             <span class="team-home_odd">${oddHomeInt.toFixed(2)}</span>
           </div>
 
-          <div class="score disable">
-            <span>
+          <div class="score">
+            <div class="disable>
               <h1></h1>
               <h1>-</h1>
               <h1></h1>
-            </span>
+            </div>
           </div>
           <div class="date">${new Date(infos.Data).toLocaleString()}</div>
         </div>

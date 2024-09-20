@@ -39,13 +39,12 @@
   background-color: #bf2ef0;
   background-clip: text;
   color: transparent;
-  
 }
 
 .header p {
   width: auto;
   margin: 0 0 0 5px;
-  font-size: 20px;
+  font-size: 15px;
   color: white;
 }
 
