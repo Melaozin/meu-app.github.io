@@ -36,8 +36,8 @@ const displayInfos = async () => {
     const [numeratorAway, denominatorAway] =
       infos.OddAway.split("/").map(Number);
 
-    const oddHomeInt = numeratorHome / denominatorHome;
-    const oddAwayInt = numeratorAway / denominatorAway;
+    const oddHomeInt = numeratorHome / denominatorHome + 1;
+    const oddAwayInt = numeratorAway / denominatorAway + 1;
 
     const containerHTML = `
       <div class="game">
