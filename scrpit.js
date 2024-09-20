@@ -1,11 +1,11 @@
-const endPoint =
-  "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard";
-const nflGames = document.getElementById("scoreboard");
-
-const displayOdds = async () => {
+const fetchData = async (camp) => {
+  const endPoint = `https://site.api.espn.com/apis/site/v2/sports/soccer/${camp}/scoreboard`;
   const res = await fetch(endPoint);
   const data = await res.json();
+  return data;
+};
 
+function mapJogos(data) {
   // Mapeando cada evento em um objeto de jogo
   const jogos = data.events.map((event) => ({
     Data: event.date,
@@ -18,14 +18,25 @@ const displayOdds = async () => {
     logoLiga: data.leagues[0].logos[0].href,
     nomeLiga: data.leagues[0].name,
   }));
-
   return jogos;
+}
+
+const features = async () => {
+  const data = [];
+  const camp = ["uefa.europa", "eng.1", "ita.1", "ger.1", "fra.1", "eng.2"];
+  for (let i = 0; i < camp.length; i++) {
+    const element = camp[i];
+    const result = await fetchData(element);
+    const jogos = mapJogos(result);
+    data.push(...jogos);
+  }
+  return data;
 };
 
 // Função que cria os quadros de jogos
 const displayInfos = async () => {
   const main = document.getElementById("main");
-  const jogos = await displayOdds();
+  const jogos = await features();
 
   jogos.forEach((infos) => {
     // Convertendo odds de fração para número
@@ -44,7 +55,6 @@ const displayInfos = async () => {
           <p>${infos.nomeLiga}</p>
           <button class="add">Add</button>
         </div>
-
         <div class="conteudo">
           <div class="teams team-home">
             <img src="${infos.escudoHome}" width="70px" />
@@ -76,30 +86,6 @@ const displayInfos = async () => {
 
     // Adicionando o conteúdo ao elemento principal
     main.appendChild(container.firstElementChild);
-  });
-  // Adicionando evento de clique para todos os botões "Add"
-  document.querySelectorAll(".add").forEach((button) => {
-    button.addEventListener("click", (e) => {
-      // Selecionando o elemento pai mais próximo com a classe "game"
-      const gameElement = e.target.closest(".game");
-
-      // Capturando as informações do quadro
-      const gameInfo = {
-        nomeLiga: gameElement.querySelector(".header p").textContent,
-        nomeHome: gameElement.querySelector(".team-home h3").textContent,
-        nomeAway: gameElement.querySelector(".team-away h3").textContent,
-        oddHome: parseFloat(
-          gameElement.querySelector(".team-home_odd").textContent
-        ),
-        oddAway: parseFloat(
-          gameElement.querySelector(".team-away_odd").textContent
-        ),
-        dataJogo: gameElement.querySelector(".date").textContent,
-      };
-
-      console.log("Informações do jogo adicionadas:", gameInfo);
-      // Aqui você pode fazer o que precisar com o objeto gameInfo
-    });
   });
 };
 
