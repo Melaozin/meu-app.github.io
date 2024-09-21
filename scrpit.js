@@ -27,15 +27,21 @@ function mapJogos(data) {
   const jogos = data.events
     .filter((event) => isToday(event.date))
     .map((event) => ({
-      Data: event.date,
-      OddHome: event.competitions[0].odds[0].homeTeamOdds.summary,
-      OddAway: event.competitions[0].odds[0].awayTeamOdds.summary,
+      OddHome:
+        event.competitions[0].odds && event.competitions[0].odds[0].homeTeamOdds
+          ? event.competitions[0].odds[0].homeTeamOdds.summary
+          : "N/A",
+      OddAway:
+        event.competitions[0].odds && event.competitions[0].odds[0].awayTeamOdds
+          ? event.competitions[0].odds[0].awayTeamOdds.summary
+          : "N/A",
       nomeHome: event.competitions[0].competitors[0].team.shortDisplayName,
       nomeAway: event.competitions[0].competitors[1].team.shortDisplayName,
       escudoHome: event.competitions[0].competitors[0].team.logo,
       escudoAway: event.competitions[0].competitors[1].team.logo,
       logoLiga: data.leagues[0].logos[0].href,
       nomeLiga: data.leagues[0].name,
+      status: new Date(event.date) < new Date() ? "Finalizado" : event.date,
     }));
   return jogos;
 }
@@ -82,17 +88,21 @@ const features = async () => {
 // Função que cria os quadros de jogos
 const displayInfos = async () => {
   const main = document.getElementById("main");
-  const jogos = await features(); // Obtem todos os jogos filtrados pela data de hoje
+  const jogos = await features();
 
   jogos.forEach((infos) => {
-    // Convertendo odds de fração para número
     const [numeratorHome, denominatorHome] =
-      infos.OddHome.split("/").map(Number);
+      infos.OddHome !== "N/A" ? infos.OddHome.split("/").map(Number) : [0, 1];
     const [numeratorAway, denominatorAway] =
-      infos.OddAway.split("/").map(Number);
+      infos.OddAway !== "N/A" ? infos.OddAway.split("/").map(Number) : [0, 1];
 
     const oddHomeInt = numeratorHome / denominatorHome + 1;
     const oddAwayInt = numeratorAway / denominatorAway + 1;
+
+    const oddHomeDisplay =
+      infos.OddHome !== "N/A" ? oddHomeInt.toFixed(2) : " ";
+    const oddAwayDisplay =
+      infos.OddAway !== "N/A" ? oddAwayInt.toFixed(2) : " ";
 
     const containerHTML = `
       <div class="game">
@@ -105,7 +115,7 @@ const displayInfos = async () => {
           <div class="teams team-home">
             <img src="${infos.escudoHome}" width="70px" />
             <h3>${infos.nomeHome}</h3>
-            <span class="team-home_odd">${oddHomeInt.toFixed(2)}</span>
+            <span class="team-home_odd">${oddHomeDisplay}</span>
           </div>
 
           <div class="score">
@@ -115,22 +125,20 @@ const displayInfos = async () => {
               <h1></h1>
             </div>
           </div>
-          <div class="date">${new Date(infos.Data).toLocaleString()}</div>
+          <div class="date">${infos.status}</div>
         </div>
         
         <div class="teams team-away">
           <img src="${infos.escudoAway}" width="70px" />
           <h3>${infos.nomeAway}</h3>
-          <span class="team-away_odd">${oddAwayInt.toFixed(2)}</span>
+          <span class="team-away_odd">${oddAwayDisplay}</span>
         </div>
       </div>
     `;
 
-    // Convertendo a string HTML em um elemento DOM
     const container = document.createElement("div");
     container.innerHTML = containerHTML;
 
-    // Adicionando o conteúdo ao elemento principal
     main.appendChild(container.firstElementChild);
   });
 };
