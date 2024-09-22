@@ -63,9 +63,11 @@
 .score {
   width: 25%;
   height: auto;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .score div {
@@ -73,8 +75,18 @@
   flex-direction: row;
 }
 
+.placar {
+  align-items: center;
+  border: solid 1px red;
+}
+
+.placar h2 {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0 5px;
+}
+
 .teams {
-  height: auto;
+  height: 100%;
   max-height: 137px;
   width: 40%;
   display: flex;
@@ -98,15 +110,15 @@
   justify-content: center;
 }
 
-.disable {
-  display: none;
-}
-
 .date {
-  width: 25%;
-  display: flex;
+  width: auto;
+  height: auto;
   justify-content: center;
   text-align: center;
-  word-wrap: break-word;
-  white-space: normal;
+  border: solid 1px red;
+  margin-top: 10px;
+}
+
+.disable {
+  display: none;
 }

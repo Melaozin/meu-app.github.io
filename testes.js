@@ -24,7 +24,7 @@ function isToday(dateString) {
 
 function mapJogos(data) {
   // Filtrando e mapeando cada evento em um objeto de jogo, apenas se a data for hoje
-  console.log("Data: ", data);
+  // console.log("Data: ", data);
   const jogos = data.events
     .filter((event) => isToday(event.date))
     .map((event) => ({
@@ -42,39 +42,51 @@ function mapJogos(data) {
       escudoAway: event.competitions[0].competitors[1].team.logo,
       logoLiga: data.leagues[0].logos[0].href,
       nomeLiga: data.leagues[0].name,
-      status: new Date(event.date) < new Date() ? "Finalizado" : event.date,
+      status:
+        new Date(event.date) < new Date()
+          ? "Finalizado"
+          : new Date(event.date).toLocaleString(),
+      placarHome:
+        new Date(event.date) <= new Date()
+          ? event.competitions[0].competitors[0].score
+          : "N/A",
+      placarAway:
+        new Date(event.date) <= new Date()
+          ? event.competitions[0].competitors[1].score
+          : "N/A",
     }));
-  console.log("Jogos:", jogos);
   return jogos;
 }
 
 const features = async () => {
   const data = [];
   const camp = [
-    "uefa.euro",
-    "conmebol.america",
-    "fifa.friendly",
+    // "uefa.euro",
+    // "conmebol.america",
+    // "fifa.friendly",
     "usa.1",
-    "usa.nwsl",
-    "mex.1",
-    "uefa.champions_qual",
-    "uefa.champions",
-    "uefa.europa",
+    "bra.1",
+    // "bra.2",
+    // "usa.nwsl",
+    // "mex.1",
+    // "uefa.champions_qual",
+    // "uefa.champions",
+    // "uefa.europa",
     "eng.1",
-    "ita.1",
-    "ger.1",
-    "esp.1",
-    "fra.1",
-    "eng.2",
-    "eng.league_cup",
-    "eng.fa",
-    "esp.copa_del_rey",
-    "ita.coppa_italia",
-    "ger.dfb_pokal",
-    "fra.coupe_de_france",
-    "mex.copa_mx",
-    "concacaf.champions",
-    "ned.1",
+    // "ita.1",
+    // "ger.1",
+    // "esp.1",
+    // "fra.1",
+    // "eng.2",
+    // "eng.league_cup",
+    // "eng.fa",
+    // "esp.copa_del_rey",
+    // "ita.coppa_italia",
+    // "ger.dfb_pokal",
+    // "fra.coupe_de_france",
+    // "mex.copa_mx",
+    // "concacaf.champions",
+    // "ned.1",
   ];
 
   for (let i = 0; i < camp.length; i++) {
@@ -107,6 +119,11 @@ const displayInfos = async () => {
     const oddAwayDisplay =
       infos.OddAway !== "N/A" ? oddAwayInt.toFixed(2) : " ";
 
+    const placarDisplay =
+      infos.placarHome === "N/A" && infos.placarAway ? "none" : "flex";
+
+    const statusJogo = infos.status == "Finalizado" ? "flex" : "none";
+
     const containerHTML = `
       <div class="game">
         <div class="header">
@@ -122,20 +139,23 @@ const displayInfos = async () => {
           </div>
 
           <div class="score">
-            <div class="disable>
-              <h1></h1>
-              <h1>-</h1>
-              <h1></h1>
+            <div class="placar" style="display: ${placarDisplay};">
+              <h1>${infos.placarHome}</h1>
+              <h2>x</h2>
+              <h1>${infos.placarAway}</h1>
+            </div> 
+            <div class="date">
+              <p style="display: ${statusJogo};"></p>
+              <p>${infos.status}</p>
             </div>
           </div>
-          <div class="date">${infos.status}</div>
-        </div>
-        
-        <div class="teams team-away">
+          
+          <div class="teams team-away">
           <img src="${infos.escudoAway}" width="70px" />
           <h3>${infos.nomeAway}</h3>
           <span class="team-away_odd">${oddAwayDisplay}</span>
-        </div>
+          </div>
+          </div>
       </div>
     `;
 

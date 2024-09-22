@@ -9,17 +9,11 @@ body {
   display: flex;
   justify-content: center;
   background: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.15) 0%,
-      rgba(0, 0, 0, 0.15) 100%
-    ),
-    radial-gradient(
-        at top center,
-        rgba(255, 255, 255, 0.4) 0%,
-        rgba(0, 0, 0, 0.4) 120%
-      )
-      #989898;
-  background-blend-mode: multiply, multiply;
+    110.3deg,
+    rgba(73, 93, 109, 1) 4.3%,
+    rgba(49, 55, 82, 1) 96.7%
+  );
+  background-repeat: no-repeat;
 }
 
 nav {
