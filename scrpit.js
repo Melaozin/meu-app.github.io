@@ -24,7 +24,7 @@ function isToday(dateString) {
 
 function mapJogos(data) {
   // Filtrando e mapeando cada evento em um objeto de jogo, apenas se a data for hoje
-  // console.log("Data: ", data);
+  console.log("Data: ", data);
   const jogos = data.events
     .filter((event) => isToday(event.date))
     .map((event) => ({
@@ -54,6 +54,9 @@ function mapJogos(data) {
         new Date(event.date) <= new Date()
           ? event.competitions[0].competitors[1].score
           : "N/A",
+      statusCode: event.competitions[0].status.clock,
+      statusDisplayClock: event.competitions[0].status.displayClock,
+      statusType: event.competitions[0].status.type.description,
     }));
   return jogos;
 }
@@ -72,7 +75,7 @@ const features = async () => {
     // "uefa.champions_qual",
     // "uefa.champions",
     // "uefa.europa",
-    "eng.1",
+    // "eng.1",
     // "ita.1",
     // "ger.1",
     // "esp.1",
@@ -114,15 +117,20 @@ const displayInfos = async () => {
     const oddHomeInt = numeratorHome / denominatorHome + 1;
     const oddAwayInt = numeratorAway / denominatorAway + 1;
 
-    const oddHomeDisplay =
-      infos.OddHome !== "N/A" ? oddHomeInt.toFixed(2) : " ";
-    const oddAwayDisplay =
-      infos.OddAway !== "N/A" ? oddAwayInt.toFixed(2) : " ";
+    const oddHomeDisplay = infos.OddHome !== "N/A" ? oddHomeInt.toFixed(2) : "";
+    const oddAwayDisplay = infos.OddAway !== "N/A" ? oddAwayInt.toFixed(2) : "";
 
     const placarDisplay =
-      infos.placarHome === "N/A" && infos.placarAway ? "none" : "flex";
+      infos.placarHome === "N/A" || infos.placarAway === "N/A"
+        ? "none"
+        : "flex";
 
-    const statusJogo = infos.status == "Finalizado" ? "flex" : "none";
+    const statusJogo = infos.status === "Full Time" ? " " : infos.statusType;
+
+    const statusTime =
+      infos.statusCode > 1 && infos.statusCode < 5400
+        ? infos.statusDisplayClock
+        : infos.status;
 
     const containerHTML = `
       <div class="game">
@@ -145,8 +153,8 @@ const displayInfos = async () => {
               <h1>${infos.placarAway}</h1>
             </div> 
             <div class="date">
-              <p style="display: ${statusJogo};"></p>
-              <p>${infos.status}</p>
+            <p class="elemento">${statusTime}</p>
+            <h4>${statusJogo}</h4>
             </div>
           </div>
           

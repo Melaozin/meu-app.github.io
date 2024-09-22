@@ -4,11 +4,9 @@
 }
 
 .game {
-  border: solid 1px black;
   width: auto;
   height: inherit;
   padding: 3px 10px;
-  border-radius: 6px;
   margin-bottom: 5px;
   background: rgba(122, 28, 172, 0.8);
   border-radius: 16px;
@@ -34,16 +32,13 @@
 }
 
 .header img {
-  margin: 0 5px 0 0;
+  margin-right: 5px;
   border-radius: 13.7px;
   background-color: #bf2ef0;
-  background-clip: text;
-  color: transparent;
 }
 
 .header p {
-  width: auto;
-  margin: 0 0 0 5px;
+  margin-left: 5px;
   font-size: 15px;
   color: white;
 }
@@ -65,24 +60,27 @@
   height: auto;
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
 }
 
 .score div {
-  display: flex;
-  flex-direction: row;
+  position: absolute;
 }
 
 .placar {
+  display: flex;
+  top: 0;
+}
+
+.score .placar {
+  top: 20px;
   align-items: center;
-  border: solid 1px red;
 }
 
 .placar h2 {
   font-family: Arial, Helvetica, sans-serif;
-  margin: 0 5px;
 }
 
 .teams {
@@ -110,15 +108,26 @@
   justify-content: center;
 }
 
-.date {
-  width: auto;
-  height: auto;
-  justify-content: center;
-  text-align: center;
-  border: solid 1px red;
-  margin-top: 10px;
+.score .date {
+  bottom: 0;
 }
 
-.disable {
-  display: none;
+.date {
+  height: 53%;
+  width: 100%;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.date p,
+.date h4 {
+  display: flex;
+  position: absolute;
+  text-align: center;
+}
+
+.date h4 {
+  bottom: 0;
 }

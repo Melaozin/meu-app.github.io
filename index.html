@@ -15,8 +15,8 @@
     </nav>
 
     <div id="main">
-      <!--<div class="game">
-        <div class="header">
+      <div class="game">
+       <!--<div class="header">
           <img src="${infos.logoLiga}" alt="" width="25px" />
           <p>${infos.nomeLiga}</p>
           <button class="add">Add</button>
@@ -25,23 +25,27 @@
           <div class="teams team-home">
             <img src="${infos.escudoHome}" width="70px" />
             <h3>${infos.nomeHome}</h3>
-            <span class="team-home_odd">${oddHomeInt.toFixed(2)}</span>
+            <span class="team-home_odd">${oddHomeDisplay}</span>
           </div>
 
           <div class="score">
-            <div class="disable>
-              <h1></h1>
-              <h1>-</h1>
-              <h1></h1>
+            <div class="placar" style="display: ${placarDisplay};">
+              <h1>${infos.placarHome}</h1>
+              <h2>x</h2>
+              <h1>${infos.placarAway}</h1>
+            </div>
+            <div class="date">
+              <p>${statusTime}</p>
+              <br />
+              <p>Second Half</p>
             </div>
           </div>
-          <div class="date">${new Date(infos.Data).toLocaleString()}</div>
-        </div>
-        
-        <div class="teams team-away">
-          <img src="${infos.escudoAway}" width="70px" />
-          <h3>${infos.nomeAway}</h3>
-          <span class="team-away_odd">${oddAwayInt.toFixed(2)}</span>
+
+          <div class="teams team-away">
+            <img src="${infos.escudoAway}" width="70px" />
+            <h3>${infos.nomeAway}</h3>
+            <span class="team-away_odd">${oddAwayDisplay}</span>
+          </div>
         </div>
       </div>
       -->
