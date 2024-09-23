@@ -24,7 +24,7 @@ function isToday(dateString) {
 
 function mapJogos(data) {
   // Filtrando e mapeando cada evento em um objeto de jogo, apenas se a data for hoje
-  console.log("Data: ", data);
+  // console.log("Data: ", data);
   const jogos = data.events
     .filter((event) => isToday(event.date))
     .map((event) => ({
@@ -64,19 +64,19 @@ function mapJogos(data) {
 const features = async () => {
   const data = [];
   const camp = [
-    // "uefa.euro",
-    // "conmebol.america",
-    // "fifa.friendly",
-    "usa.1",
-    "bra.1",
-    // "bra.2",
-    // "usa.nwsl",
-    // "mex.1",
-    // "uefa.champions_qual",
-    // "uefa.champions",
-    // "uefa.europa",
-    // "eng.1",
-    // "ita.1",
+    //"uefa.euro",
+    //"conmebol.america",
+    //"fifa.friendly",
+    //"usa.1",
+    //"bra.1",
+    "bra.2",
+    "usa.nwsl",
+    //"mex.1",
+    //"uefa.champions_qual",
+    //"uefa.champions",
+    //"uefa.europa",
+    //"eng.1",
+    "ita.1",
     // "ger.1",
     // "esp.1",
     // "fra.1",
@@ -97,7 +97,7 @@ const features = async () => {
     const result = await fetchData(element);
     const jogos = mapJogos(result);
     data.push(...jogos);
-    console.log(`Jogos de hoje em ${element}:`, jogos);
+    // console.log(`Jogos de hoje em ${element}:`, jogos);
   }
 
   return data;
@@ -125,7 +125,18 @@ const displayInfos = async () => {
         ? "none"
         : "flex";
 
-    const statusJogo = infos.status === "Full Time" ? " " : infos.statusType;
+    const statusJogo =
+      infos.statusType === "Full Time"
+        ? infos.status
+        : infos.statusType == "Scheduled"
+        ? ""
+        : infos.statusType == "Half Time"
+        ? "Intervalo"
+        : infos.statusType == "First Time"
+        ? "Primeiro Tempo"
+        : infos.statusType == "Second Time"
+        ? "Segundo Tempo"
+        : "";
 
     const statusTime =
       infos.statusCode > 1 && infos.statusCode < 5400
@@ -171,6 +182,18 @@ const displayInfos = async () => {
     container.innerHTML = containerHTML;
 
     main.appendChild(container.firstElementChild);
+  });
+  // Adicionando evento de clique para todos os botões "Add"
+  document.querySelectorAll(".add").forEach((button) => {
+    button.addEventListener("click", (e) => {
+      const base = e.srcElement.attributes;
+
+      const infosJson = {
+        containerJogo: base[0].ownerElement.offsetParent.offsetParent,
+      };
+      console.log("Base", base);
+      console.log("infos", infosJson);
+    });
   });
 };
 

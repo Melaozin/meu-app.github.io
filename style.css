@@ -45,7 +45,7 @@
 
 .header button {
   position: absolute;
-  width: 50px;
+  width: auto;
   height: 20px;
   right: 5px;
 }
@@ -63,6 +63,9 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+.conteudo h3 {
+  font-size: 14px;
 }
 
 .score div {
