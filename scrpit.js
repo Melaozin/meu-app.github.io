@@ -143,6 +143,16 @@ const displayInfos = async () => {
         ? infos.statusDisplayClock
         : infos.status;
 
+    const buttons = document.querySelectorAll(".add");
+
+    const teste = buttons.forEach((button) => {
+      button.disabled = "true";
+    });
+
+    const verificar =
+      infos.oddAwayDisplay == "N/A" && infos.oddHomeDisplay == "N/A"
+        ? teste
+        : "errado";
     const containerHTML = `
       <div class="game">
         <div class="header">
@@ -183,19 +193,26 @@ const displayInfos = async () => {
 
     main.appendChild(container.firstElementChild);
   });
+
   // Adicionando evento de clique para todos os botões "Add"
-  document.querySelectorAll(".add").forEach((button) => {
+  const buttons = document.querySelectorAll(".add");
+  buttons.forEach((button) => {
     button.addEventListener("click", (e) => {
       const base = e.srcElement.attributes;
+
+      button.disabled = true;
+      button.innerText = "Adicionado";
 
       const infosJson = {
         containerJogo: base[0].ownerElement.offsetParent.offsetParent,
       };
-      console.log("Base", base);
-      console.log("infos", infosJson);
+      array.push(infosJson);
+      console.log(array);
     });
   });
 };
+
+var array = [];
 
 // Chame a função para exibir as informações
 displayInfos();
