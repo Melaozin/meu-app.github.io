@@ -21,7 +21,7 @@ body {
   background-repeat: no-repeat;
 }
 
-nav {
+.nav-pag {
   background-color: #0b0916;
   height: 77px;
   width: 100%;
@@ -34,7 +34,7 @@ nav {
   z-index: 100;
 }
 
-nav a {
+.nav-pag a {
   text-align: center;
   align-content: center;
   padding: 0;

@@ -5,13 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bilhetes</title>
     <link rel="stylesheet" href="/css/global.css" type="text/css" />
-    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/css/bilhete.css" type="text/css" />
   </head>
   <body>
-    <nav>
-      <a class="bnt-menu_1" href="/bilhete">Bilhete</a>
-      <a class="partidas" href="/">Partidas</a>
+    <nav class="nav-pag">
+      <a class="bnt-menu_1" href="/">Partidas</a>
       <a class="bnt-menu_2" href="/historico">Histórico</a>
+    </nav>
+    <nav class="nav-odds">
+      <div class="forma">
+        <div class="options">
+          <label>
+            <input type="radio" name="option" id="split" value="split" />
+            Dividir
+          </label>
+          <label>
+            <input type="radio" name="option" id="each" value="each" />
+            Individual
+          </label>
+        </div>
+
+        <label for="money" class="valor">
+          Valor da Aposta:
+          <input
+            type="number"
+            name="money"
+            id="money"
+            placeholder="R$"
+            value="50"
+          />
+          <button id="calcular-btn">Calcular</button>
+        </label>
+      </div>
     </nav>
 
     <div id="main"></div>
