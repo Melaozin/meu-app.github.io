@@ -69,14 +69,14 @@ const features = async () => {
     // "fifa.friendly",
     // "usa.1",
     // "bra.1",
-    // "bra.2",
+    "bra.2",
     // "usa.nwsl",
     // "mex.1",
     // "uefa.champions_qual",
     // "uefa.champions",
     // "uefa.europa",
     // "eng.1",
-    "ita.1",
+    // "ita.1",
     // "ger.1",
     // "esp.1",
     // "fra.1",
@@ -97,7 +97,7 @@ const features = async () => {
     const result = await fetchData(element);
     const jogos = mapJogos(result);
     data.push(...jogos);
-    //console.log(`Jogos de hoje em ${element}:`, jogos);
+    // console.log(`Jogos de hoje em ${element}:`, jogos);
   }
 
   return data;
@@ -186,32 +186,45 @@ const displayInfos = async () => {
     main.appendChild(container.firstElementChild);
   });
 
-  // Adicionando evento de clique para todos os botões "Add"
+  const addJogo = async (jogo) => {
+    try {
+      const res = await fetch("/add-jogo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jogo),
+      });
+
+      if (!res.ok) throw new Error("Erro ao adicionar o jogo");
+      const result = await res.text();
+      console.log(result); // "Jogo adicionado com sucesso"
+    } catch (error) {
+      console.error("Erro ao enviar o jogo:", error);
+    }
+  };
+
+  // Evento para adicionar jogos
   const buttons = document.querySelectorAll(".add");
   buttons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      const base = e.srcElement.attributes;
+      const gameElement = e.target.closest(".game");
+
+      const jogo = {
+        nomeHome: gameElement.querySelector(".team-home h3").innerText,
+        nomeAway: gameElement.querySelector(".team-away h3").innerText,
+        oddHome: gameElement.querySelector(".team-home_odd").innerText || "N/A",
+        oddAway: gameElement.querySelector(".team-away_odd").innerText || "N/A",
+        status: gameElement.querySelector(".date .elemento").innerText || "N/A",
+      };
 
       button.disabled = true;
       button.innerText = "Adicionado";
 
-      const infosJson = {
-        containerJogo: base[0].ownerElement.offsetParent.offsetParent,
-      };
-      addJogo(infosJson);
-      console.log(array);
+      addJogo(jogo); // Envia os dados do jogo para o backend
+      console.log(jogo); // Exibe os dados no console
     });
   });
-};
-
-let array = [];
-
-export const addJogo = (jogo) => {
-  array.push(jogo);
-};
-
-export const getJogosAdicionados = () => {
-  return [...array]; // Retorna uma cópia do array
 };
 
 // Chame a função para exibir as informações

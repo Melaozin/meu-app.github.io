@@ -22,8 +22,8 @@ function isToday(dateString) {
   );
 }
 
+// Filtrando e mapeando cada evento em um objeto de jogo, apenas se a data for hoje
 function mapJogos(data) {
-  // Filtrando e mapeando cada evento em um objeto de jogo, apenas se a data for hoje
   // console.log("Data: ", data);
   const jogos = data.events
     .filter((event) => isToday(event.date))
@@ -64,19 +64,19 @@ function mapJogos(data) {
 const features = async () => {
   const data = [];
   const camp = [
-    //"uefa.euro",
-    //"conmebol.america",
-    //"fifa.friendly",
-    //"usa.1",
-    //"bra.1",
+    // "uefa.euro",
+    // "conmebol.america",
+    // "fifa.friendly",
+    // "usa.1",
+    // "bra.1",
     "bra.2",
-    "usa.nwsl",
-    //"mex.1",
-    //"uefa.champions_qual",
-    //"uefa.champions",
-    //"uefa.europa",
-    //"eng.1",
-    "ita.1",
+    // "usa.nwsl",
+    // "mex.1",
+    // "uefa.champions_qual",
+    // "uefa.champions",
+    // "uefa.europa",
+    // "eng.1",
+    // "ita.1",
     // "ger.1",
     // "esp.1",
     // "fra.1",
@@ -143,22 +143,14 @@ const displayInfos = async () => {
         ? infos.statusDisplayClock
         : infos.status;
 
-    const buttons = document.querySelectorAll(".add");
+    const isOddsAvailable = infos.OddHome !== "N/A" && infos.OddAway !== "N/A";
 
-    const teste = buttons.forEach((button) => {
-      button.disabled = "true";
-    });
-
-    const verificar =
-      infos.oddAwayDisplay == "N/A" && infos.oddHomeDisplay == "N/A"
-        ? teste
-        : "errado";
     const containerHTML = `
       <div class="game">
         <div class="header">
           <img src="${infos.logoLiga}" alt="" width="25px" />
           <p>${infos.nomeLiga}</p>
-          <button class="add">Add</button>
+          <button class="add" ${isOddsAvailable ? "" : "disabled"}>Add</button>
         </div>
         <div class="conteudo">
           <div class="teams team-home">
@@ -194,25 +186,46 @@ const displayInfos = async () => {
     main.appendChild(container.firstElementChild);
   });
 
-  // Adicionando evento de clique para todos os botões "Add"
+  const addJogo = async (jogo) => {
+    try {
+      const res = await fetch("/add-jogo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jogo),
+      });
+
+      if (!res.ok) throw new Error("Erro ao adicionar o jogo");
+      const result = await res.text();
+      console.log(result); // "Jogo adicionado com sucesso"
+    } catch (error) {
+      console.error("Erro ao enviar o jogo:", error);
+    }
+  };
+
+  // Evento para adicionar jogos
   const buttons = document.querySelectorAll(".add");
   buttons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      const base = e.srcElement.attributes;
+      const gameElement = e.target.closest(".game");
+
+      const jogo = {
+        nomeHome: gameElement.querySelector(".team-home h3").innerText,
+        nomeAway: gameElement.querySelector(".team-away h3").innerText,
+        oddHome: gameElement.querySelector(".team-home_odd").innerText || "N/A",
+        oddAway: gameElement.querySelector(".team-away_odd").innerText || "N/A",
+        status: gameElement.querySelector(".date .elemento").innerText || "N/A",
+      };
 
       button.disabled = true;
       button.innerText = "Adicionado";
 
-      const infosJson = {
-        containerJogo: base[0].ownerElement.offsetParent.offsetParent,
-      };
-      array.push(infosJson);
-      console.log(array);
+      addJogo(jogo); // Envia os dados do jogo para o backend
+      console.log(jogo); // Exibe os dados no console
     });
   });
 };
-
-var array = [];
 
 // Chame a função para exibir as informações
 displayInfos();
