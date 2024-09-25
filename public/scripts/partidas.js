@@ -24,7 +24,7 @@ function isToday(dateString) {
 
 // Filtrando e mapeando cada evento em um objeto de jogo, apenas se a data for hoje
 function mapJogos(data) {
-  // console.log("Data: ", data);
+  //console.log("Data: ", data);
   const jogos = data.events
     .filter((event) => isToday(event.date))
     .map((event) => ({
@@ -69,12 +69,12 @@ const features = async () => {
     // "fifa.friendly",
     // "usa.1",
     // "bra.1",
-    "bra.2",
+    // "bra.2",
     // "usa.nwsl",
     // "mex.1",
     // "uefa.champions_qual",
     // "uefa.champions",
-    // "uefa.europa",
+    "uefa.europa",
     // "eng.1",
     // "ita.1",
     // "ger.1",
@@ -97,7 +97,7 @@ const features = async () => {
     const result = await fetchData(element);
     const jogos = mapJogos(result);
     data.push(...jogos);
-    // console.log(`Jogos de hoje em ${element}:`, jogos);
+    //console.log(`Jogos de hoje em ${element}:`, jogos);
   }
 
   return data;
@@ -127,7 +127,7 @@ const displayInfos = async () => {
 
     const statusJogo =
       infos.statusType === "Full Time"
-        ? infos.status
+        ? ""
         : infos.statusType == "Scheduled"
         ? ""
         : infos.statusType == "Half Time"
@@ -161,9 +161,9 @@ const displayInfos = async () => {
 
           <div class="score">
             <div class="placar" style="display: ${placarDisplay};">
-              <h1>${infos.placarHome}</h1>
+              <h1 class="placar-home">${infos.placarHome}</h1>
               <h2>x</h2>
-              <h1>${infos.placarAway}</h1>
+              <h1 class="placar-away">${infos.placarAway}</h1>
             </div> 
             <div class="date">
             <p class="elemento">${statusTime}</p>
@@ -216,6 +216,14 @@ const displayInfos = async () => {
         oddHome: gameElement.querySelector(".team-home_odd").innerText || "N/A",
         oddAway: gameElement.querySelector(".team-away_odd").innerText || "N/A",
         status: gameElement.querySelector(".date .elemento").innerText || "N/A",
+        logoHome: gameElement.querySelector(".team-home img").src,
+        logoAway: gameElement.querySelector(".team-away img").src,
+        placarHome: gameElement.querySelector(".score .placar .placar-home")
+          .innerText,
+        placarAway: gameElement.querySelector(".score .placar .placar-away")
+          .innerText,
+        liga: gameElement.querySelector(".header p").innerText,
+        ligaLogo: gameElement.querySelector(".header img").src,
       };
 
       button.disabled = true;

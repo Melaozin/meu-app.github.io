@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const { v4: uuidv4 } = require("uuid"); // Usado para gerar IDs únicos
 
 const app = express();
 
@@ -8,6 +9,9 @@ const app = express();
 app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname, "views"));
+
+// Middleware para JSON no express
+app.use(express.json());
 
 // Renderizar os arquivos
 app.get("/", (req, res) => {
@@ -22,52 +26,85 @@ app.get("/historico", (req, res) => {
 
 // Renderizar o CSS e JS
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.json()); // Para processar requisições com JSON
 
-const filePath = path.join(__dirname, "jogos.json"); // Caminho do arquivo JSON
+// Função para criar ou garantir que a pasta Bilhetes exista
+const ensureBilhetesDirectory = () => {
+  const dir = path.join(__dirname, "Bilhetes");
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+};
 
-// Testes
+// Função para gerar o nome do arquivo baseado no dia atual
+const getFileNameForToday = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0"); // Adiciona 0 à esquerda
+  const day = String(today.getDate()).padStart(2, "0");
+  return `bilhete_${year}-${month}-${day}.json`;
+};
 
-// Endpoint para adicionar jogos ao JSON
+// Rota para adicionar jogos ao JSON
 app.post("/add-jogo", (req, res) => {
-  const newJogo = req.body;
+  ensureBilhetesDirectory();
 
-  // Verifica se o arquivo existe, se não, cria um novo arquivo
-  fs.readFile(filePath, "utf8", (err, data) => {
-    if (err && err.code !== "ENOENT") {
-      return res.status(500).send("Erro ao ler o arquivo de jogos");
-    }
+  const fileName = getFileNameForToday();
+  const filePath = path.join(__dirname, "Bilhetes", fileName);
 
-    let jogos = [];
+  const novoJogo = { id: uuidv4(), ...req.body }; // Adiciona um ID único ao jogo
 
-    // Se o arquivo existe, lê os jogos existentes
-    if (data) {
-      jogos = JSON.parse(data);
-    }
+  // Verificar se o arquivo já existe
+  if (fs.existsSync(filePath)) {
+    // Se o arquivo existir, ler e adicionar o novo jogo
+    const fileContent = fs.readFileSync(filePath, "utf-8");
+    const jogos = JSON.parse(fileContent);
+    jogos.push(novoJogo);
+    fs.writeFileSync(filePath, JSON.stringify(jogos, null, 2));
+  } else {
+    // Se o arquivo não existir, criar um novo arquivo com o jogo
+    const jogos = [novoJogo];
+    fs.writeFileSync(filePath, JSON.stringify(jogos, null, 2));
+  }
 
-    jogos.push(newJogo);
-
-    // Salvar de volta no arquivo JSON
-    fs.writeFile(filePath, JSON.stringify(jogos, null, 2), (err) => {
-      if (err) {
-        return res.status(500).send("Erro ao salvar o arquivo de jogos");
-      }
-      res.send("Jogo adicionado com sucesso");
-    });
-  });
+  res
+    .status(200)
+    .json({ message: "Jogo adicionado com sucesso!", id: novoJogo.id });
 });
 
-// Endpoint para ler os jogos do JSON
+// Rota para ler os jogos do arquivo do dia
 app.get("/ler-jogos", (req, res) => {
-  fs.readFile(filePath, "utf8", (err, data) => {
-    if (err && err.code !== "ENOENT") {
-      return res.status(500).send("Erro ao ler o arquivo de jogos");
-    }
+  const fileName = getFileNameForToday();
+  const filePath = path.join(__dirname, "Bilhetes", fileName);
 
-    const jogos = data ? JSON.parse(data) : [];
-    console.log(jogos); // Exibe os jogos no console do servidor
-    res.json(jogos); // Retorna os jogos como resposta
-  });
+  if (fs.existsSync(filePath)) {
+    const fileContent = fs.readFileSync(filePath, "utf-8");
+    const jogos = JSON.parse(fileContent);
+    res.json(jogos);
+  } else {
+    res.status(404).json({ message: "Nenhum jogo encontrado para hoje." });
+  }
+});
+
+// Rota para excluir um jogo pelo ID
+app.delete("/delete-jogo/:id", (req, res) => {
+  ensureBilhetesDirectory();
+
+  const fileName = getFileNameForToday();
+  const filePath = path.join(__dirname, "Bilhetes", fileName);
+  const { id } = req.params;
+
+  if (fs.existsSync(filePath)) {
+    const fileContent = fs.readFileSync(filePath, "utf-8");
+    let jogos = JSON.parse(fileContent);
+
+    // Filtrar o jogo que será excluído
+    jogos = jogos.filter((jogo) => jogo.id !== id);
+
+    fs.writeFileSync(filePath, JSON.stringify(jogos, null, 2));
+    res.status(200).json({ message: "Jogo excluído com sucesso!" });
+  } else {
+    res.status(404).json({ message: "Arquivo não encontrado." });
+  }
 });
 
 // Iniciar o Servidor
