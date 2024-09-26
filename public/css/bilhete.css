@@ -3,7 +3,7 @@
   height: auto;
   width: 85%;
   padding: 8px 15px;
-  margin-bottom: 125px;
+  margin-bottom: 355px;
   margin-top: 20%;
 }
 
@@ -204,7 +204,7 @@ hr {
   background-color: wheat;
   width: 95%;
   height: auto;
-  position: absolute;
+  position: fixed;
   display: flex;
   text-align: center;
   flex-direction: column;
