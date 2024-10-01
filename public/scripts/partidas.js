@@ -73,8 +73,8 @@ const features = async () => {
     // "usa.nwsl",
     // "mex.1",
     // "uefa.champions_qual",
-    // "uefa.champions",
-     "uefa.europa",
+    "uefa.champions",
+    //  "uefa.europa",
     // "eng.1",
     // "ita.1",
     // "ger.1",
@@ -150,7 +150,7 @@ const displayInfos = async () => {
         <div class="header">
           <img src="${infos.logoLiga}" alt="" width="25px" />
           <p>${infos.nomeLiga}</p>
-          <button class="add" ${isOddsAvailable ? "" : "disabled"}>Add</button>
+          <button class="add" ${isOddsAvailable ? "" : "disabled"}>+</button>
         </div>
         <div class="conteudo">
           <div class="teams team-home">

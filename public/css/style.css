@@ -8,12 +8,12 @@
   height: inherit;
   padding: 3px 10px;
   margin-bottom: 5px;
-  background: rgba(122, 28, 172, 0.8);
+  background: #1c1c1c;
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(6.5px);
   -webkit-backdrop-filter: blur(6.5px);
-  border: 1px solid #bf2ef0;
+  border: 1px solid #3c3c3c;
 }
 
 .game:last-child {
@@ -28,26 +28,31 @@
   align-items: center;
   margin-bottom: 7px;
   padding: 2px;
-  border-bottom: solid 1px #bf2ef0;
+  border-bottom: solid 1px #3c3c3c;
 }
 
 .header img {
   margin-right: 5px;
-  border-radius: 13.7px;
-  background-color: #bf2ef0;
+  border-radius: 3px;
+  background-color: #f1f1f1;
 }
 
 .header p {
   margin-left: 5px;
   font-size: 15px;
-  color: white;
+  color: #e0e0e0;
 }
 
 .header button {
   position: absolute;
   width: auto;
-  height: 20px;
+  height: auto;
   right: 5px;
+  padding: 0 4px;
+  font-size: 16px;
+  background: #8e44ad;
+  color: #e0e0e0;
+  border: solid 1px #d3d3d3;
 }
 
 .conteudo {
@@ -82,6 +87,11 @@
   align-items: center;
 }
 
+.score p,
+.date p {
+  color: #e0e0e0;
+}
+
 .placar h2 {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -101,6 +111,7 @@
   display: flex;
   justify-content: center;
   text-align: center;
+  color: #e0e0e0;
 }
 
 .teams span {
@@ -109,6 +120,7 @@
   font-size: 25px;
   display: flex;
   justify-content: center;
+  color: #e0e0e0;
 }
 
 .score .date {
