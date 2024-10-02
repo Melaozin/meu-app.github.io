@@ -34,13 +34,14 @@
 .header img {
   margin-right: 5px;
   border-radius: 3px;
-  background-color: #f1f1f1;
+  background-color: #e0e0e0;
+  padding: 3px;
 }
 
 .header p {
   margin-left: 5px;
   font-size: 15px;
-  color: #e0e0e0;
+  color: #8e44ad;
 }
 
 .header button {
@@ -52,7 +53,8 @@
   font-size: 16px;
   background: #8e44ad;
   color: #e0e0e0;
-  border: solid 1px #d3d3d3;
+  border: solid 1px #8e44ad;
+  border-radius: 3px;
 }
 
 .conteudo {
