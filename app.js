@@ -6,11 +6,8 @@ const { v4: uuidv4 } = require("uuid"); // Usado para gerar IDs únicos
 
 const app = express();
 
-const port = 5000;
-
 // Setar a extensão
 app.set("view engine", "ejs");
-
 app.set("views", path.join(__dirname, "views"));
 
 // Middleware para JSON no express
@@ -58,13 +55,11 @@ app.post("/add-jogo", (req, res) => {
 
   // Verificar se o arquivo já existe
   if (fs.existsSync(filePath)) {
-    // Se o arquivo existir, ler e adicionar o novo jogo
     const fileContent = fs.readFileSync(filePath, "utf-8");
     const jogos = JSON.parse(fileContent);
     jogos.push(novoJogo);
     fs.writeFileSync(filePath, JSON.stringify(jogos, null, 2));
   } else {
-    // Se o arquivo não existir, criar um novo arquivo com o jogo
     const jogos = [novoJogo];
     fs.writeFileSync(filePath, JSON.stringify(jogos, null, 2));
   }
@@ -99,10 +94,7 @@ app.delete("/delete-jogo/:id", (req, res) => {
   if (fs.existsSync(filePath)) {
     const fileContent = fs.readFileSync(filePath, "utf-8");
     let jogos = JSON.parse(fileContent);
-
-    // Filtrar o jogo que será excluído
     jogos = jogos.filter((jogo) => jogo.id !== id);
-
     fs.writeFileSync(filePath, JSON.stringify(jogos, null, 2));
     res.status(200).json({ message: "Jogo excluído com sucesso!" });
   } else {
@@ -110,10 +102,5 @@ app.delete("/delete-jogo/:id", (req, res) => {
   }
 });
 
-// Iniciar o Servidor
-app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}.`);
-});
-
-module.exports = app;
+// Exporte o app para uso no Netlify
 module.exports.handler = serverless(app);
