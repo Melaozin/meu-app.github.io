@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "netlify dev",
-    "build": "netlify-lambda build netlify/functions"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
@@ -12,7 +11,10 @@
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^4.21.0",
-    "serverless-http": "^3.2.0",
+    "fs": "^0.0.1-security",
+    "handlebars": "^4.7.8",
+    "path": "^0.12.7",
+    "pug": "^3.0.3",
     "uuid": "^10.0.0"
   },
   "description": ""

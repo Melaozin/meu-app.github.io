@@ -1,5 +1,4 @@
 const express = require("express");
-const serverless = require("serverless-http");
 const path = require("path");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid"); // Usado para gerar IDs únicos
@@ -102,5 +101,8 @@ app.delete("/delete-jogo/:id", (req, res) => {
   }
 });
 
-// Exporte o app para uso no Netlify
-module.exports.handler = serverless(app);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
