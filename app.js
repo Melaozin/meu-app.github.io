@@ -1,9 +1,12 @@
 const express = require("express");
+const serverless = require("serverless-http");
 const path = require("path");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid"); // Usado para gerar IDs únicos
 
 const app = express();
+
+const port = 5000;
 
 // Setar a extensão
 app.set("view engine", "ejs");
@@ -108,6 +111,9 @@ app.delete("/delete-jogo/:id", (req, res) => {
 });
 
 // Iniciar o Servidor
-app.listen(5000, () => {
-  console.log("Servidor rodando na porta 5000.");
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}.`);
 });
+
+module.exports = app;
+module.exports.handler = serverless(app);

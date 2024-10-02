@@ -1,0 +1,3 @@
+[build]
+  functions = "netlify/functions"
+  publish = "public" # ou o caminho onde seus arquivos estáticos estão
