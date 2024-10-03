@@ -57,6 +57,10 @@
   border-radius: 3px;
 }
 
+button.add:disabled {
+  display: none;
+}
+
 .conteudo {
   display: flex;
   flex-direction: row;
