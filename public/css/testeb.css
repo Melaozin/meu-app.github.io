@@ -1,252 +1,147 @@
-#main {
-  background-color: #dad4b5;
-  height: auto;
-  width: 85%;
-  padding: 8px;
-  margin-top: 20%;
-  border-radius: 0 0 5px 5px;
+@import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
+
+:root {
+  --primary-color: #6600cc;
+  --dark-color: #1c1c1c;
+  --gray-color: #414141;
+  --white-color: #fff;
+  --light-color: #f2f2f2;
+  --wheat-color: #f5deb3;
 }
 
-.nav-odds {
-  background-color: #4a5568;
+body {
+  background-color: var(--dark-color);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Oxygen", sans-serif;
+}
+
+nav {
+  background-color: var(--gray-color);
+  border: 1px black solid;
+  border-radius: 0 0 7px 7px;
+  height: 12vh;
   width: 100%;
-  height: 10%;
   display: flex;
-  position: absolute;
   align-items: center;
-  color: #fff;
-}
-
-.valor {
-  width: 50%;
-  height: 50%;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 15px;
-  right: 0;
-  top: 2px;
-}
-
-#money {
-  width: 60%;
-  margin-right: 10px;
-  text-align: end;
-  right: 0;
-  font-size: 17px;
-}
-
-#money::placeholder {
-  text-align: left;
-}
-
-.forma {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  padding: 10px 5px 4px 5px;
+  justify-content: space-between;
+  padding: 0.75rem;
+  color: var(--white-color);
 }
 
 .options {
-  width: auto;
   height: auto;
-  position: absolute;
+  width: auto;
+  display: inline-block;
+}
+
+.options label {
+  display: block;
+  margin: 0.5rem 0;
+}
+
+.aposta {
   display: flex;
   flex-direction: column;
-  color: #fff;
+  text-align: center;
+  align-items: center;
+}
+
+.aposta > * {
+  margin: 0.15rem 0;
+}
+
+.aposta input {
+  width: 45%;
+  text-align: right;
+}
+
+.aposta input::placeholder {
+  text-align: left;
+  border-radius: 10px;
 }
 
 #calcularBtn {
-  background-color: #3b82f6;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 3px;
-  cursor: pointer;
+  border-radius: 3px;
+  padding: 0.2rem 0.1rem;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border: solid 1px var(--primary-color);
 }
 
-hr {
-  width: 165%;
-  margin: 2px;
-}
-
-.infos-lucro {
-  background-color: #dad4b5;
-  width: 95%;
+#main,
+#infos-lucro {
+  background-color: var(--wheat-color);
+  padding: 0.5rem;
+  width: 80%;
   height: auto;
-  max-height: 35vh;
-  position: fixed;
-  display: flex;
-  text-align: center;
-  flex-direction: column;
-  padding: 5px 7px;
-  border-radius: 4px 4px 0 0;
-  bottom: 77px;
+  border: solid 1.5px var(--light-color);
+  left: 50%;
+  transform: translate(-50%, 0);
   overflow: auto;
 }
 
-.infos-lucro h3 {
+#main {
+  border-radius: 0 0 10px 10px;
+  max-height: 42vh;
+  position: relative;
+}
+
+#infos-lucro {
+  border-radius: 10px 10px 0 0;
+  max-height: 34vh;
+  position: fixed;
+  bottom: 10vh;
+  font-size: 12px;
+}
+
+#infos-lucro h3 {
   border-bottom: 1px solid #606060;
 }
 
-.infos-lucro ul p {
+#infos-lucro ul p {
   text-align: left;
 }
 
-.infos-lucro ul li {
+#infos-lucro ul li {
   text-align: right;
   list-style: none;
 }
 
-.infos-lucro ul li:last-child {
-  border-bottom: 1px #808080 solid;
+#infos-lucro ul li:last-child {
+  border-bottom: 1px solid #808080;
 }
 
-/* Style do painel do jogo */
-.game {
-  width: auto;
-  height: inherit;
-  padding: 3px 10px;
-  margin-bottom: 5px;
-  background: #1c1c1c;
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(6.5px);
-  -webkit-backdrop-filter: blur(6.5px);
-  border: 1px solid #3c3c3c;
-}
-
-.game:last-child {
-  margin-bottom: 10px;
-}
-
-.header {
+.nav-pag {
+  background-color: var(--gray-color);
   width: 100%;
-  height: auto;
-  display: flex;
-  position: relative;
-  align-items: center;
-  margin-bottom: 7px;
-  padding: 2px;
-  border-bottom: solid 1px #3c3c3c;
-}
-
-.header img {
-  margin-right: 5px;
-  border-radius: 3px;
-  background-color: #e0e0e0;
-  padding: 3px;
-}
-
-.header p {
-  margin-left: 5px;
-  font-size: 15px;
-  color: #8e44ad;
-}
-
-.header button {
+  height: 10vh;
   position: absolute;
-  width: auto;
-  height: auto;
-  right: 5px;
-  padding: 0 4px;
-  font-size: 16px;
-  background: #8e44ad;
-  color: #e0e0e0;
-  border: solid 1px #8e44ad;
-  border-radius: 3px;
-}
-
-.conteudo {
-  display: flex;
-  flex-direction: row;
-}
-
-.score {
-  width: 25%;
-  height: auto;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.conteudo h3 {
-  font-size: 14px;
-}
-
-.score div {
-  position: absolute;
-}
-
-.placar {
-  display: flex;
-  top: 0;
-}
-
-.score .placar {
-  top: 20px;
-  align-items: center;
-}
-
-.score p,
-.date p {
-  color: #e0e0e0;
-}
-
-.placar h2 {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.teams {
-  height: 100%;
-  max-height: 137px;
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2px 15px;
-}
-
-.teams h3 {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  color: #e0e0e0;
-}
-
-.teams span {
-  width: 50px;
-  height: 30px;
-  font-size: 25px;
-  display: flex;
-  justify-content: center;
-  color: #e0e0e0;
-}
-
-.score .date {
   bottom: 0;
-}
-
-.date {
-  height: 53%;
-  width: 100%;
   display: flex;
-  position: relative;
-  justify-content: center;
   align-items: center;
+  justify-content: space-around;
+  border-radius: 7px 7px 0 0;
 }
 
-.date p,
-.date h4 {
-  display: flex;
-  position: absolute;
+.nav-pag a {
+  border-radius: 7px;
+  color: var(--white-color);
+  text-decoration: none;
   text-align: center;
 }
 
-.date h4 {
-  bottom: 30%;
-  color: #e0e0e0;
+.bnt-menu_1,
+.bnt-menu_2 {
+  background-color: var(--primary-color);
+  height: 65%;
+  width: auto;
+  font-size: 22px;
+  padding: 0.5rem 0.25rem;
 }

@@ -4,29 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bilhetes</title>
-    <link rel="stylesheet" href="/css/testes.css" type="text/css" />
     <link rel="stylesheet" href="/css/testeb.css" type="text/css" />
+    <link rel="stylesheet" href="/css/bilhete.css" type="text/css" />
   </head>
   <body>
-    <nav class="nav-pag">
-      <a class="bnt-menu_1" href="/">Partidas</a>
-      <a class="bnt-menu_2" href="/historico">Histórico</a>
-    </nav>
-    <nav class="nav-odds">
-      <div class="forma">
+    <header>
+      <nav>
         <div class="options">
           <label>
-            <input type="radio" name="option" id="split" value="split" />
-            Dividir
+            <input type="radio" name="opcao" value="0" /> Individual
           </label>
           <label>
-            <input type="radio" name="option" id="each" value="each" />
-            Individual
+            <input type="radio" name="opcao" value="1" /> Dividido
           </label>
         </div>
 
-        <label for="money" class="valor">
-          Valor da Aposta:
+        <div class="aposta">
+          <label for="money" class="valor"> Valor da Aposta: </label>
           <input
             type="number"
             name="money"
@@ -35,12 +29,17 @@
             value=""
           />
           <button id="calcularBtn">Calcular</button>
-        </label>
-      </div>
-    </nav>
+        </div>
+      </nav>
+    </header>
 
-    <div id="main"></div>
-    <div id="infos-lucro" class="infos-lucro"></div>
+    <section id="main"></section>
+    <section id="infos-lucro"></section>
+    
+    <footer class="nav-pag">
+      <a class="bnt-menu_1" href="/">Partidas</a>
+      <a class="bnt-menu_2" href="/historico">Histórico</a>
+    </footer>
 
     <script type="module" src="/scripts/bilhete.js"></script>
   </body>
