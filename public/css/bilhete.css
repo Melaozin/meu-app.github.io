@@ -91,7 +91,7 @@ nav {
   border-radius: 0 0 10px 10px;
   max-height: 42vh;
   position: relative;
-  margin: 0.5rem 0 0 0;
+  margin-bottom: 1rem;
 }
 
 #infos-lucro {
