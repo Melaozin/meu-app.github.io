@@ -1,72 +1,190 @@
-html {
-  height: auto;
-  min-height: 100%;
+:root {
+  --primary-color: #6600cc;
+  --dark-color: #1c1c1c;
+  --gray-color: #414141;
+  --white-color: #fff;
+  --light-color: #f2f2f2;
 }
-
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
+/* Barra de Navegação */
 body {
-  height: auto;
-  display: flex;
-  justify-content: center;
-  background: linear-gradient(
-    110.3deg,
-    rgba(73, 93, 109, 1) 4.3%,
-    rgba(49, 55, 82, 1) 96.7%
-  );
-  background-repeat: no-repeat;
+  background-color: var(--dark-color);
 }
 
 .nav-pag {
-  background-color: #0b0916;
-  height: 77px;
+  background-color: var(--gray-color);
   width: 100%;
-  display: flex;
+  height: 10vh;
   position: fixed;
   bottom: 0;
-  justify-content: space-around;
+  display: flex;
   align-items: center;
-  border-radius: 10px 0px;
-  z-index: 100;
+  justify-content: space-around;
+  border-radius: 7px 7px 0 0;
 }
 
 .nav-pag a {
-  text-align: center;
-  align-content: center;
-  padding: 0;
   border-radius: 7px;
-  color: #f5f5f5;
+  color: var(--white-color);
   text-decoration: none;
+  text-align: center;
 }
 
-.partidas {
-  background-color: #4e0c92;
-  height: 90px;
-  width: 90px;
-  border-radius: 50%;
-  position: absolute;
-  top: -20px;
-  font-size: 22px;
-}
-
-.bnt-menu_1 {
-  background-color: #4e0c92;
-  height: 50px;
-  width: 100px;
-  font-size: 22px;
-  position: absolute;
-  left: 5%;
-}
-
+.bnt-menu_1,
 .bnt-menu_2 {
-  background-color: #4e0c92;
-  height: 50px;
-  width: 100px;
+  background-color: var(--primary-color);
+  height: 65%;
+  width: auto;
   font-size: 22px;
+  padding: 0.5rem 0.25rem;
+}
+
+/* Container de Jogos */
+.game {
+  width: auto;
+  height: inherit;
+  padding: 3px 10px;
+  margin-bottom: 5px;
+  background: #1c1c1c;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.5px);
+  -webkit-backdrop-filter: blur(6.5px);
+  border: 1px solid #3c3c3c;
+}
+
+.game:last-child {
+  margin-bottom: 75px;
+}
+
+.header {
+  width: 100%;
+  height: auto;
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin-bottom: 7px;
+  padding: 2px;
+  border-bottom: solid 1px #3c3c3c;
+}
+
+.header img {
+  margin-right: 5px;
+  border-radius: 3px;
+  background-color: #e0e0e0;
+  padding: 3px;
+}
+
+.header p {
+  margin-left: 5px;
+  font-size: 15px;
+  color: #8e44ad;
+}
+
+.header button {
   position: absolute;
-  right: 5%;
+  width: auto;
+  height: auto;
+  right: 5px;
+  padding: 0 4px;
+  font-size: 16px;
+  background: #8e44ad;
+  color: #e0e0e0;
+  border: solid 1px #8e44ad;
+  border-radius: 3px;
+}
+
+button.add:disabled {
+  display: none;
+}
+
+.conteudo {
+  display: flex;
+  flex-direction: row;
+}
+
+.score {
+  width: 25%;
+  height: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.conteudo h3 {
+  font-size: 14px;
+}
+
+.score div {
+  position: absolute;
+}
+
+.placar {
+  display: flex;
+  top: 0;
+}
+
+.score .placar {
+  top: 20px;
+  align-items: center;
+}
+
+.score p,
+.date p {
+  color: #e0e0e0;
+}
+
+.placar h2 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.teams {
+  height: 100%;
+  max-height: 137px;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 15px;
+}
+
+.teams h3 {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: #e0e0e0;
+}
+
+.teams span {
+  width: 50px;
+  height: 30px;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  color: #e0e0e0;
+}
+
+.score .date {
+  bottom: 0;
+}
+
+.date {
+  height: 53%;
+  width: 100%;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.date p,
+.date h4 {
+  display: flex;
+  position: absolute;
+  text-align: center;
+}
+
+.date h4 {
+  bottom: 30%;
 }

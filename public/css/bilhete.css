@@ -1,145 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
 
-.game {
-  width: auto;
-  height: inherit;
-  padding: 3px 10px;
-  margin-bottom: 8px;
-  background: rgba(122, 28, 172, 0.8);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(6.5px);
-  border: 1px solid #bf2ef0;
+:root {
+  --primary-color: #6600cc;
+  --dark-color: #1c1c1c;
+  --gray-color: #414141;
+  --white-color: #fff;
+  --light-color: #f2f2f2;
+  --wheat-color: #f5deb3;
 }
 
-.header {
+body {
+  background-color: var(--dark-color);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Oxygen", sans-serif;
+}
+
+nav {
+  background-color: var(--gray-color);
+  border: 1px black solid;
+  border-radius: 0 0 7px 7px;
+  height: 12vh;
   width: 100%;
-  height: auto;
   display: flex;
-  position: relative;
   align-items: center;
-  margin-bottom: 7px;
-  padding: 2px;
-  border-bottom: solid 1px #bf2ef0;
+  justify-content: space-between;
+  padding: 0.75rem;
+  color: var(--white-color);
 }
 
-.header img {
-  margin-right: 5px;
-  border-radius: 13.7px;
-  background-color: #bf2ef0;
+.options {
+  height: auto;
+  width: auto;
+  display: inline-block;
 }
 
-.header p {
-  margin-left: 5px;
+.options label {
+  display: block;
+  margin: 0.5rem 0;
+}
+
+.aposta {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.aposta > * {
+  margin: 0.15rem 0;
+}
+
+.aposta input {
+  width: 45%;
+  text-align: right;
+}
+
+.aposta input::placeholder {
+  text-align: left;
+  border-radius: 10px;
+}
+
+#calcularBtn {
+  border-radius: 3px;
+  padding: 0.2rem 0.1rem;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border: solid 1px var(--primary-color);
+}
+
+#main,
+#infos-lucro {
+  background-color: var(--wheat-color);
+  padding: 0.5rem;
+  width: 80%;
+  height: auto;
+  border: solid 1.5px var(--light-color);
+  left: 50%;
+  transform: translate(-50%, 0);
+  overflow: auto;
+}
+
+#main {
+  border-radius: 0 0 10px 10px;
+  max-height: 42vh;
+  position: relative;
+}
+
+#infos-lucro {
+  border-radius: 10px 10px 0 0;
+  max-height: 34vh;
+  position: fixed;
+  bottom: 8vh;
   font-size: 12px;
-  color: white;
 }
 
-.header .delete-btn {
-  position: absolute;
-  width: auto;
-  height: 20px;
-  right: 5px;
+#infos-lucro h3 {
+  border-bottom: 1px solid #606060;
 }
 
-.conteudo {
-  display: flex;
-  flex-direction: row;
+#infos-lucro ul p {
+  text-align: left;
 }
 
-.score {
-  width: 25%;
-  height: auto;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+#infos-lucro ul li {
+  text-align: right;
+  list-style: none;
 }
 
-.conteudo h3 {
-  height: 100px;
-  align-items: center;
-  font-size: 11px;
+#infos-lucro ul li:last-child {
+  border-bottom: 1px solid #808080;
 }
 
-.score div {
-  position: absolute;
-}
 
-.placar {
-  display: flex;
-  top: 0;
-}
-
-.score .placar {
-  top: 20px;
-  align-items: center;
-}
-
-.placar h2 {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.aposta-text {
-  width: auto;
-  height: auto;
-  display: flex;
-  position: absolute;
-  bottom: 1%;
-  font-size: 14px;
-}
-
-.teams {
-  height: 100%;
-  max-height: 137px;
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2px 15px;
-}
-
-.teams h3 {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-}
-
-.teams span {
-  width: 50px;
-  height: 30px;
-  font-size: 14px;
-  display: flex;
-  justify-content: center;
-}
-
-.score .date {
-  bottom: 0;
-}
-
-.date {
-  height: 53%;
-  width: 100%;
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-}
-
-.date p,
-.date h4 {
-  display: flex;
-  position: absolute;
-  text-align: center;
-  font-size: 10px;
-}
-
-.date h4 {
-  bottom: 30%;
-}
-
-hr {
-  width: 165%;
-  margin: 2px;
-}
