@@ -11,9 +11,7 @@ const lerJogos = async () => {
     main.innerHTML = "";
 
     // Exibir os jogos na interface
-    jogos.forEach((infos) => {
-      display(infos);
-    });
+    jogos.forEach((infos) => display(infos));
   } catch (error) {
     console.error("Erro ao ler os jogos:", error);
   }
@@ -35,20 +33,32 @@ const excluirJogo = async (id, container) => {
 // Função para calcular as apostas
 function calcularApostas() {
   const totalStake = parseFloat(document.getElementById("money").value);
+  if (isNaN(totalStake) || totalStake <= 0) {
+    alert("Por favor, insira um valor válido para o total de aposta.");
+    return null; // Retorna null se totalStake for inválido
+  }
+
+  const x = document.querySelector("input[name=opcao]:checked").value; // Opção selecionada
   const games = document.querySelectorAll(".game");
+  const stakePerGame = x === "1" ? totalStake / games.length : totalStake; // Stake por jogo
+
   const oddsArray = [];
   const jogosInfo = [];
 
   games.forEach((game) => {
-    const oddHome = game.querySelector("span.team-home_odd").innerHTML;
-    const oddAway = game.querySelector("span.team-away_odd").innerHTML;
+    const oddHome = parseFloat(
+      game.querySelector("span.team-home_odd").innerHTML
+    );
+    const oddAway = parseFloat(
+      game.querySelector("span.team-away_odd").innerHTML
+    );
     const jogo = `${game.querySelector(".team-home h3").innerHTML} x ${
       game.querySelector(".team-away h3").innerHTML
     }`;
 
     const stage2 = 1 / oddHome + 1 / oddAway;
-    const stage1Home = totalStake / oddHome;
-    const stage1Away = totalStake / oddAway;
+    const stage1Home = stakePerGame / oddHome;
+    const stage1Away = stakePerGame / oddAway;
 
     const ViHome = (stage1Home / stage2).toFixed(2);
     const ViAway = (stage1Away / stage2).toFixed(2);
@@ -57,7 +67,7 @@ function calcularApostas() {
     jogosInfo.push(jogo);
   });
 
-  return [oddsArray, totalStake, jogosInfo, games];
+  return { oddsArray, stakePerGame, totalStake, jogosInfo, games };
 }
 
 // Função para exibir os jogos
@@ -80,7 +90,6 @@ function display(infos) {
           <h3>${infos.nomeHome}</h3>
           <span class="team-home_odd">${infos.oddHome}</span>
         </div>
-
         <div class="score">
           <div class="placar" style="display: ${placarDisplay};">
             <h1>${infos.placarHome}</h1>
@@ -91,7 +100,6 @@ function display(infos) {
             <h4>${infos.status}</h4>
           </div>
         </div>
-        
         <div class="teams team-away">
           <img src="${infos.logoAway}" width="70px" />
           <h3>${infos.nomeAway}</h3>
@@ -111,78 +119,67 @@ function display(infos) {
     excluirJogo(infos.id, gameElement);
   });
 
-  // Adicionar o painel do jogo ao elemento principal (main)
   main.appendChild(gameElement);
 }
 
+// Botão para calcular as apostas
 const calcularBtn = document.querySelector("#calcularBtn");
 calcularBtn.addEventListener("click", () => {
-  const [odds, totalStake, jogosInfo, games] = calcularApostas();
-  const painelLucro = document.getElementById("infos-lucro");
+  const result = calcularApostas();
+  if (!result) return; // Interrompe se o cálculo não foi realizado
 
+  const { oddsArray, stakePerGame, totalStake, jogosInfo, games } = result;
+  const painelLucro = document.getElementById("infos-lucro");
   const oddsHome = [];
   const oddsAway = [];
 
   games.forEach((game) => {
-    const oddHome = game.querySelector("span.team-home_odd").innerHTML;
-    oddsHome.push(oddHome);
-  });
-  games.forEach((game) => {
-    const oddAway = game.querySelector("span.team-away_odd").innerHTML;
-    oddsAway.push(oddAway);
+    oddsHome.push(
+      parseFloat(game.querySelector("span.team-home_odd").innerHTML)
+    );
+    oddsAway.push(
+      parseFloat(game.querySelector("span.team-away_odd").innerHTML)
+    );
   });
 
-  // Create HTML for individual profits
   const apostaItems = jogosInfo
-    .map((jogo, index) => {
-      return `<li> (R$ ${odds[index * 2 + 1]}) ${jogo} (R$ ${
-        odds[index * 2]
-      }), </li>`;
-    })
+    .map(
+      (jogo, index) =>
+        `<li> (R$ ${oddsArray[index * 2 + 1]}) ${jogo} (R$ ${
+          oddsArray[index * 2]
+        }), </li>`
+    )
     .join("");
-
-  // Criar HTML para lucros
   const lucroItems = jogosInfo
-    .map((jogo, index) => {
-      return `<li>(R$ ${(
-        oddsHome[index] * odds[index * 2 + 1] -
-        totalStake
-      ).toFixed(2)}) ${jogo}  (R$ ${(
-        oddsAway[index] * odds[index * 2] -
-        totalStake
-      ).toFixed(2)})</li>`;
-    })
+    .map(
+      (jogo, index) =>
+        `<li>(R$ ${(
+          oddsHome[index] * oddsArray[index * 2 + 1] -
+          stakePerGame
+        ).toFixed(2)}) ${jogo}  (R$ ${(
+          oddsAway[index] * oddsArray[index * 2] -
+          stakePerGame
+        ).toFixed(2)})</li>`
+    )
     .join("");
-
   const retornoItems = jogosInfo
-    .map((jogo, index) => {
-      return `<li>(R$ ${(oddsHome[index] * odds[index * 2 + 1]).toFixed(
-        2
-      )}) ${jogo}  (R$ ${(oddsAway[index] * odds[index * 2]).toFixed(2)})</li>`;
-    })
+    .map(
+      (jogo, index) =>
+        `<li>(R$ ${(oddsHome[index] * oddsArray[index * 2 + 1]).toFixed(
+          2
+        )}) ${jogo}  (R$ ${(oddsAway[index] * oddsArray[index * 2]).toFixed(
+          2
+        )})</li>`
+    )
     .join("");
 
-  const lucroHtml = `
-  <h3>Lucro</h3>
-  <ul>
-    <p>Aposta Individual:</p>
-    ${apostaItems}
-  </ul>
-  <ul>
-    <p>Possíveis retornos:</p>
-    ${retornoItems}
-  </ul>
-  <ul>
-    <p>Aposta Individual:</p>
-    ${lucroItems}
-  </ul>
-  <ul>
-    <p>Valor Apostado:</p>
-    <li>R$ ${totalStake.toFixed(2)}</li>
-  </ul>
+  painelLucro.innerHTML = `
+    <h3>Lucro</h3>
+    <ul><p>Aposta Individual:</p>${apostaItems}</ul>
+    <ul><p>Possíveis retornos:</p>${retornoItems}</ul>
+    <ul><p>Aposta Individual:</p>${lucroItems}</ul>
+    <ul><p>Valor Apostado:</p><li>R$ ${totalStake.toFixed(2)}</li></ul>
   `;
-
-  painelLucro.innerHTML = lucroHtml;
 });
 
 // Chamar a função para ler os jogos e exibi-los

@@ -95,6 +95,7 @@ nav {
 
 #infos-lucro {
   border-radius: 10px 10px 0 0;
+  padding-bottom: 10px;
   max-height: 34vh;
   position: fixed;
   bottom: 8vh;
@@ -117,5 +118,3 @@ nav {
 #infos-lucro ul li:last-child {
   border-bottom: 1px solid #808080;
 }
-
-
