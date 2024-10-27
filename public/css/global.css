@@ -43,17 +43,12 @@ body {
   width: auto;
   height: inherit;
   padding: 3px 10px;
-  margin-bottom: 5px;
-  background: #1c1c1c;
+  margin-bottom: 15px;
+  background-image: linear-gradient(to bottom, #414141, #54565b, #414141);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(6.5px);
   -webkit-backdrop-filter: blur(6.5px);
-  border: 1px solid #3c3c3c;
-}
-
-.game:last-child {
-  margin-bottom: 75px;
+  border: 1px solid var(--light-color);
 }
 
 .header {
@@ -64,20 +59,20 @@ body {
   align-items: center;
   margin-bottom: 7px;
   padding: 2px;
-  border-bottom: solid 1px #3c3c3c;
+  border-bottom: solid 1px var(--light-color);
 }
 
 .header img {
   margin-right: 5px;
   border-radius: 3px;
-  background-color: #e0e0e0;
+  background-color: var(--light-color);
   padding: 3px;
 }
 
 .header p {
   margin-left: 5px;
   font-size: 15px;
-  color: #8e44ad;
+  color: #ff00ff;
 }
 
 .header button {
@@ -87,9 +82,9 @@ body {
   right: 5px;
   padding: 0 4px;
   font-size: 16px;
-  background: #8e44ad;
-  color: #e0e0e0;
-  border: solid 1px #8e44ad;
+  background: var(--primary-color);
+  color: var(--white-color);
+  border: solid 1px var(--primary-color);
   border-radius: 3px;
 }
 
@@ -130,12 +125,14 @@ button.add:disabled {
 }
 
 .score p,
-.date p {
-  color: #e0e0e0;
+.date p,
+.score h1,
+.score h2 {
+  color: var(--light-color);
 }
-
-.placar h2 {
-  font-family: Arial, Helvetica, sans-serif;
+.score h2 {
+  margin: 0 5px;
+  font-size: 18px;
 }
 
 .teams {
