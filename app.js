@@ -70,9 +70,9 @@ app.post("/add-jogo", (req, res) => {
 
 // Rota para ler os jogos do arquivo do dia'
 app.get("/ler-jogos", (req, res) => {
-  // const fileName = getFileNameForToday();
+  const fileName = getFileNameForToday();
 
-  const fileName = "bilhete_2024-09-26.json";
+  // const fileName = "bilhete_2024-09-26.json";
   const filePath = path.join(__dirname, "Bilhetes", fileName);
 
   if (fs.existsSync(filePath)) {
