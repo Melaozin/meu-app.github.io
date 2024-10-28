@@ -68,10 +68,11 @@ app.post("/add-jogo", (req, res) => {
     .json({ message: "Jogo adicionado com sucesso!", id: novoJogo.id });
 });
 
-// Rota para ler os jogos do arquivo do dia
+// Rota para ler os jogos do arquivo do dia'
 app.get("/ler-jogos", (req, res) => {
-  const fileName = getFileNameForToday();
-  // const fileName = "bilhete_2024-09-26.json";
+  // const fileName = getFileNameForToday();
+
+  const fileName = "bilhete_2024-09-26.json";
   const filePath = path.join(__dirname, "Bilhetes", fileName);
 
   if (fs.existsSync(filePath)) {
@@ -99,6 +100,43 @@ app.delete("/delete-jogo/:id", (req, res) => {
     res.status(200).json({ message: "Jogo excluído com sucesso!" });
   } else {
     res.status(404).json({ message: "Arquivo não encontrado." });
+  }
+});
+
+// Rota para criar um novo bilhete
+app.post("/criar-bilhete", (req, res) => {
+  const data = req.body; // Recebe os dados do bilhete
+  const fileName = getFileNameForToday(); // Nome do arquivo baseado na data
+  const filePath = path.join(__dirname, "Historico", fileName);
+
+  // Verifica se a pasta Historico existe
+  if (!fs.existsSync(path.join(__dirname, "Historico"))) {
+    fs.mkdirSync(path.join(__dirname, "Historico"));
+  }
+
+  // Salva o bilhete no arquivo JSON
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf8");
+  res.status(200).json({ message: "Bilhete criado com sucesso!" });
+});
+
+// Rota para ler bilhetes no Histórico
+app.get("/ler-historico", (req, res) => {
+  const dirPath = path.join(__dirname, "Historico");
+
+  if (fs.existsSync(dirPath)) {
+    const files = fs
+      .readdirSync(dirPath)
+      .filter((file) => file.endsWith(".json"));
+
+    const historico = files.map((file) => {
+      const filePath = path.join(dirPath, file);
+      const fileContent = fs.readFileSync(filePath, "utf-8");
+      return JSON.parse(fileContent); // Parse o conteúdo JSON de cada arquivo
+    });
+
+    res.json(historico); // Envia todos os arquivos como um array de objetos JSON
+  } else {
+    res.status(404).json({ message: "Nenhum histórico encontrado." });
   }
 });
 

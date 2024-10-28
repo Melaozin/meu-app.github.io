@@ -197,8 +197,6 @@ const displayInfos = async () => {
       });
 
       if (!res.ok) throw new Error("Erro ao adicionar o jogo");
-      const result = await res.text();
-      console.log(result); // "Jogo adicionado com sucesso"
     } catch (error) {
       console.error("Erro ao enviar o jogo:", error);
     }

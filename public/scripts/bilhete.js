@@ -145,15 +145,16 @@ calcularBtn.addEventListener("click", () => {
   const apostaItems = jogosInfo
     .map(
       (jogo, index) =>
-        `<li> (R$ ${oddsArray[index * 2 + 1]}) ${jogo} (R$ ${
+        `<li class="vApostar"> (R$ ${oddsArray[index * 2 + 1]}) ${jogo} (R$ ${
           oddsArray[index * 2]
         }), </li>`
     )
     .join("");
+
   const lucroItems = jogosInfo
     .map(
       (jogo, index) =>
-        `<li>(R$ ${(
+        `<li class="lucro">(R$ ${(
           oddsHome[index] * oddsArray[index * 2 + 1] -
           stakePerGame
         ).toFixed(2)}) ${jogo}  (R$ ${(
@@ -165,11 +166,11 @@ calcularBtn.addEventListener("click", () => {
   const retornoItems = jogosInfo
     .map(
       (jogo, index) =>
-        `<li>(R$ ${(oddsHome[index] * oddsArray[index * 2 + 1]).toFixed(
-          2
-        )}) ${jogo}  (R$ ${(oddsAway[index] * oddsArray[index * 2]).toFixed(
-          2
-        )})</li>`
+        `<li class="retorno">(R$ ${(
+          oddsHome[index] * oddsArray[index * 2 + 1]
+        ).toFixed(2)}) ${jogo}  (R$ ${(
+          oddsAway[index] * oddsArray[index * 2]
+        ).toFixed(2)})</li>`
     )
     .join("");
 
@@ -177,9 +178,61 @@ calcularBtn.addEventListener("click", () => {
     <h3>Lucro</h3>
     <ul><p>Aposta Individual:</p>${apostaItems}</ul>
     <ul><p>Possíveis retornos:</p>${retornoItems}</ul>
-    <ul><p>Aposta Individual:</p>${lucroItems}</ul>
+    <ul><p>Lucro Individual:</p>${lucroItems}</ul>
     <ul><p>Valor Apostado:</p><li>R$ ${totalStake.toFixed(2)}</li></ul>
   `;
+});
+
+// Botão para criar um novo bilhete
+const criarBilheteBtn = document.getElementById("criarBilheteBtn");
+criarBilheteBtn.addEventListener("click", async () => {
+  const painelLucro = document.getElementById("infos-lucro");
+
+  if (!painelLucro.innerHTML.trim()) {
+    alert(
+      "O painel de lucro está vazio. Calcule as apostas antes de criar o bilhete."
+    );
+    return;
+  }
+
+  const dataBilhete = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // Adiciona 0 à esquerda
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${day}/${month}/${year}`;
+  };
+
+  // Captura os valores do painel de lucro
+  const apostaItems = [...painelLucro.querySelectorAll("li.vApostar")].map(
+    (item) => item.innerHTML
+  );
+  const lucroItems = [...painelLucro.querySelectorAll("li.lucro")].map(
+    (item) => item.innerHTML
+  );
+  const retornoItems = [...painelLucro.querySelectorAll("li.retorno")].map(
+    (item) => item.innerHTML
+  );
+  const valorApostado = painelLucro.querySelector("ul:last-child li").innerHTML; // Captura o valor apostado
+
+  // Estruturar os dados do bilhete
+  const bilheteData = {
+    apostaItems,
+    lucroItems,
+    retornoItems,
+    valorApostado,
+    dataBilhete: dataBilhete(),
+  };
+  try {
+    const res = await fetch("/criar-bilhete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bilheteData),
+    });
+    if (!res.ok) throw new Error("Erro ao criar bilhete");
+  } catch (error) {
+    console.error("Erro ao criar o bilhete", error);
+  }
 });
 
 // Chamar a função para ler os jogos e exibi-los

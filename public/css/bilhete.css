@@ -65,11 +65,14 @@ nav {
   border-radius: 10px;
 }
 
-#calcularBtn {
+#calcularBtn,
+#criarBilheteBtn {
+  width: auto;
   border-radius: 3px;
   padding: 0.2rem 0.1rem;
   font-size: 14px;
   font-weight: 500;
+  display: inline;
   background-color: var(--primary-color);
   color: var(--white-color);
   border: solid 1px var(--primary-color);
